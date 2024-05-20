@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パチンコゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #game {
+            text-align: center;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        #spinButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        #spinCount {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <h1>パチンコゲーム</h1>
+        <button id="spinButton">スピン！</button>
+        <div id="result"></div>
+        <div id="spinCount">スピン回数: 0</div>
+    </div>
+
+    <audio id="winSound">
+        <source src="win-sound.mp3" type="audio/mpeg">
+        <source src="win-sound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="spinSound">
+        <source src="spin-sound.mp3" type="audio/mpeg">
+        <source src="spin-sound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="spinSound">
+        <source src="spin-sound.mp3" type="audio/mpeg">
+        <source src="spin-sound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        let spinCount = 0;
+
+        document.getElementById('spinButton').addEventListener('click', function() {
+            const winningProbability = 1 / 10;
+            const spinResult = Math.random();
+            const resultDiv = document.getElementById('result');
+            const spinCountDiv = document.getElementById('spinCount');
+            const winSound = document.getElementById('winSound');
+            const spinSound = document.getElementById('spinSound');
+
+            spinCount++;
+            spinCountDiv.textContent = `スピン回数: ${spinCount}`;
+            spinSound.play();
+
+            if (spinResult < winningProbability) {
+                resultDiv.textContent = '大当たり！おめでとうございます！';
+                resultDiv.style.color = 'red';
+                winSound.play().catch(error => console.error('音声再生エラー:', error));
+            } else {
+                resultDiv.textContent = 'はずれ。もう一度挑戦してください。';
+                resultDiv.style.color = 'black';
+            }
+        });
+    </script>
+</body>
+</html>
