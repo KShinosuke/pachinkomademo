@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パチンコゲーム 1/10</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #game {
+            text-align: center;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            visibility: hidden; /* 初期状態で非表示に */
+        }
+        #spinButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        #spinCount {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <h1>パチンコゲーム 1/10</h1>
+        <button id="spinButton">スピン！</button>
+        <div id="result"></div>
+        <div id="spinCount">スピン回数: 0</div>
+    </div>
+
+    <audio id="winSound">
+        <source src="win-sound.mp3" type="audio/mpeg">
+        <source src="win-sound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="spinSound">
+        <source src="spin-sound.mp3" type="audio/mpeg">
+        <source src="spin-sound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <audio id="preSound">
+        <source src="rezerosakibare.mp3" type="audio/mpeg">
+        <source src="rezerosakibare.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        let spinCount = 0;
+
+        document.getElementById('spinButton').addEventListener('click', function() {
+            const winningProbability = 1 / 10;
+            const preSoundProbability = 0.4; // 40%
+            const spinResult = Math.random();
+            const resultDiv = document.getElementById('result');
+            const spinCountDiv = document.getElementById('spinCount');
+            const winSound = document.getElementById('winSound');
+            const spinSound = document.getElementById('spinSound');
+            const preSound = document.getElementById('preSound');
+
+            // スピンボタンを押したときに結果表示をリセット
+            resultDiv.style.visibility = 'hidden';
+
+            spinCount++;
+            spinCountDiv.textContent = `スピン回数: ${spinCount}`;
+            spinSound.play();
+
+            if (spinResult < winningProbability) {
+                // 大当たりの処理
+                preSound.play().catch(error => console.error('先バレ音再生エラー:', error));
+                setTimeout(() => {
+                    resultDiv.textContent = '大当たり！おめでとうございます！';
+                    resultDiv.style.color = 'red';
+                    resultDiv.style.visibility = 'visible';
+                    winSound.play().catch(error => console.error('音声再生エラー:', error));
+                }, 3000);
+            } else {
+                // ハズレの処理
+                const preSoundResult = Math.random();
+                if (preSoundResult < preSoundProbability) {
+                    preSound.play().catch(error => console.error('先バレ音再生エラー:', error));
+                }
+                setTimeout(() => {
+                    resultDiv.textContent = 'はずれ。もう一度挑戦してください。';
+                    resultDiv.style.color = 'black';
+                    resultDiv.style.visibility = 'visible';
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
