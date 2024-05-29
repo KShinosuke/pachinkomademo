@@ -40,7 +40,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 48px;
+            font-size: 60px;
             font-weight: bold;
             display: none;
             font-family: 'Matisse EB', sans-serif;
@@ -48,7 +48,7 @@
         }
         @media (max-width: 600px) {
             #nextTimeMessage {
-                font-size: 32px; /* スマートフォン表示でフォントサイズを調整 */
+                font-size: 64px; /* スマートフォン表示でフォントサイズを調整 */
             }
         }
         #serviceMessage {
@@ -59,8 +59,17 @@
             font-size: 48px;
             font-weight: bold;
             display: none;
-            white-space: nowrap; /* テキストを1行に収める */
+            text-align: center; /* テキストを中央揃えにする */
             animation: rainbowText 1s infinite;
+        }
+        #serviceMessage span {
+            display: block; /* 各行をブロック要素にする */
+            white-space: nowrap; /* 各行を1行に収める */
+        }
+        @media (max-width: 600px) {
+            #serviceMessage {
+                font-size: 36px; /* スマートフォン表示でフォントサイズを調整 */
+            }
         }
         @keyframes rainbowText {
             0% { color: red; }
@@ -97,8 +106,11 @@
         <div id="spinCount">スピン回数: 0</div>
     </div>
     <div id="overlay">
-        <div id="nextTimeMessage">次回予告</div>
-        <div id="serviceMessage">サービス、サービス</div>
+        <div id="nextTimeMessage">予告</div>
+        <div id="serviceMessage">
+            <span>次回</span>
+            <span>サービス、サービス</span>
+        </div>
     </div>
 
     <audio id="winSound">
@@ -142,6 +154,7 @@
                 resultDiv.textContent = '';
 
                 overlay.style.display = 'flex';
+                overlay.style.backgroundColor = 'black'; // 背景を黒に設定
                 nextTimeMessage.style.display = 'block';
                 serviceMessage.style.display = 'none';
 
@@ -173,3 +186,5 @@
     </script>
 </body>
 </html>
+
+
