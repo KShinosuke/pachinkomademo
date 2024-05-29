@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Matisse+EB&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+　　<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+　　<link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Noto+Serif+JP:wght@900&display=swap" rel="stylesheet">
     <title>パチンコゲーム</title>
     <style>
         body {
@@ -36,28 +38,29 @@
             font-size: 20px;
         }
         #nextTimeMessage {
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scaleY(1.5);
             font-size: 60px;
             font-weight: bold;
             display: none;
-            font-family: 'Matisse EB', sans-serif;
+            font-family: 'Noto Serif JP', serif;
             white-space: nowrap; /* テキストを1行に収める */
         }
         @media (max-width: 600px) {
             #nextTimeMessage {
-                font-size: 64px; /* スマートフォン表示でフォントサイズを調整 */
+                font-size: 80px; /* スマートフォン表示でフォントサイズを調整 */
             }
         }
         #serviceMessage {
-            position: absolute;
+            position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scaleY(1.5);
             font-size: 48px;
             font-weight: bold;
+            font-family: 'Noto Serif JP', serif;
             display: none;
             text-align: center; /* テキストを中央揃えにする */
             animation: rainbowText 1s infinite;
@@ -81,7 +84,7 @@
             100% { color: violet; }
         }
         #overlay {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -186,5 +189,3 @@
     </script>
 </body>
 </html>
-
-
