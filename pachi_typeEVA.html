@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Matisse+EB&display=swap" rel="stylesheet">
     <title>パチンコゲーム</title>
     <style>
         body {
@@ -34,16 +35,31 @@
             margin-top: 10px;
             font-size: 20px;
         }
-        #serviceMessage, #nextTimeMessage {
+        #nextTimeMessage {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 58px;
+            font-size: 48px;
             font-weight: bold;
             display: none;
+            font-family: 'Matisse EB', sans-serif;
+            white-space: nowrap; /* テキストを1行に収める */
+        }
+        @media (max-width: 600px) {
+            #nextTimeMessage {
+                font-size: 32px; /* スマートフォン表示でフォントサイズを調整 */
+            }
         }
         #serviceMessage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: bold;
+            display: none;
+            white-space: nowrap; /* テキストを1行に収める */
             animation: rainbowText 1s infinite;
         }
         @keyframes rainbowText {
