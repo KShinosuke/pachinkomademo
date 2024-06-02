@@ -35,7 +35,7 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scaleY(10); /* scaleYを10倍に設定 */
+            transform: translate(-50%, -50%) scaleY(6); /* scaleYを6倍に設定 */
             font-family: "Arial Black", sans-serif; /* ゴシック体にする */
             font-size: 112px;
             color: lime; /* 緑蛍光色にする */
@@ -99,6 +99,13 @@
         Your browser does not support the audio element.
     </audio>
 
+    <audio id="spinSound">
+        <source src="spin-sound.mp3" type="audio/mpeg">
+        <source src="spin-sound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+    
+
     <script>
         const winSound = document.getElementById('winSound');
         let spinCount = 0;
@@ -115,6 +122,7 @@
 
             spinCount++;
             spinCountDiv.textContent = `スピン回数: ${spinCount}`;
+            spinSound.play();
 
             // 次のスピン時に小当たりメッセージを非表示にする
             smallWinMessage.style.display = 'none';
