@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パチンコゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        #game {
+            text-align: center;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        #spinButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        #spinCount {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+        #bigWinMessage {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scaleY(10); /* scaleYを10倍に設定 */
+            font-family: "Arial Black", sans-serif; /* ゴシック体にする */
+            font-size: 112px;
+            color: lime; /* 緑蛍光色にする */
+            opacity: 1; /* 初期の透明度を1に設定 */
+            display: none; /* 初期状態では非表示 */
+            animation: flash 0.5s infinite alternate, shake 0.1s infinite; /* アニメーションを適用 */
+            text-align: center;
+        }
+        #smallWinMessage {
+            margin-top: 10px;
+            font-size: 24px;
+            color: blue; /* 青色にする */
+            display: none; /* 初期状態では非表示 */
+            text-align: center;
+        }
+
+        @keyframes flash {
+            0% { color: lime; opacity: 0.2; }
+            100% { color: white; opacity: 1; }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(-50%, -50%) translate(1px, 1px) rotate(0deg) scaleY(10); }
+            10% { transform: translate(-50%, -50%) translate(-1px, -2px) rotate(-1deg) scaleY(10); }
+            20% { transform: translate(-50%, -50%) translate(-3px, 0px) rotate(1deg) scaleY(10); }
+            30% { transform: translate(-50%, -50%) translate(3px, 2px) rotate(0deg) scaleY(10); }
+            40% { transform: translate(-50%, -50%) translate(1px, -1px) rotate(1deg) scaleY(10); }
+            50% { transform: translate(-50%, -50%) translate(-1px, 2px) rotate(-1deg) scaleY(10); }
+            60% { transform: translate(-50%, -50%) translate(-3px, 1px) rotate(0deg) scaleY(10); }
+            70% { transform: translate(-50%, -50%) translate(3px, 1px) rotate(-1deg) scaleY(10); }
+            80% { transform: translate(-50%, -50%) translate(-1px, -1px) rotate(1deg) scaleY(10); }
+            90% { transform: translate(-50%, -50%) translate(1px, 2px) rotate(0deg) scaleY(10); }
+            100% { transform: translate(-50%, -50%) translate(1px, -2px) rotate(-1deg) scaleY(10); }
+        }
+
+        #probabilityButton {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="game">
+        <h1>パチンコゲーム</h1>
+        <button id="spinButton">スピン！</button>
+        <div id="result"></div>
+        <div id="spinCount">スピン回数: 0</div>
+        <div id="bigWinMessage">99.9%</div>
+        <div id="smallWinMessage">次行くわよ！</div>
+        <button id="probabilityButton">確率変動ボタン</button>
+    </div>
+
+    <audio id="winSound">
+        <source src="REKI_sakibare.mp3" type="audio/mpeg">
+        <source src="REKI_sakibare.mp3" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const winSound = document.getElementById('winSound');
+        let spinCount = 0;
+        let bigWinProbability = 1 / 399.9;
+        const smallWinProbability = 1 / 192.7;
+        const spinCountDiv = document.getElementById('spinCount');
+        const bigWinMessage = document.getElementById('bigWinMessage');
+        const smallWinMessage = document.getElementById('smallWinMessage');
+        const probabilityButton = document.getElementById('probabilityButton');
+
+        document.getElementById('spinButton').addEventListener('click', function() {
+            const spinResult = Math.random();
+            const resultDiv = document.getElementById('result');
+
+            spinCount++;
+            spinCountDiv.textContent = `スピン回数: ${spinCount}`;
+
+            // 次のスピン時に小当たりメッセージを非表示にする
+            smallWinMessage.style.display = 'none';
+
+            if (spinResult < bigWinProbability) {
+                resultDiv.textContent = '大当たり！おめでとうございます！';
+                resultDiv.style.color = 'red';
+                bigWinMessage.textContent = '99.9%';
+                bigWinMessage.style.display = 'block'; // 表示する
+
+                winSound.play().then(() => {
+                    winSound.addEventListener('ended', () => {
+                        bigWinMessage.style.display = 'none'; // 音声が終わったら非表示にする
+                    }, { once: true });
+                }).catch(error => console.error('音声再生エラー:', error));
+
+                spinCount = 0;
+                probabilityButton.style.display = 'none';
+                bigWinProbability = 1 / 399.9; // 大当たりの後に確率を元に戻す
+            } else if (spinResult < smallWinProbability) {
+                resultDiv.textContent = '緋弾チャージ';
+                resultDiv.style.color = 'blue';
+                smallWinMessage.style.display = 'block'; // 小当たりメッセージを表示する
+                bigWinMessage.style.display = 'none'; // 大当たりメッセージを非表示にする
+            } else {
+                resultDiv.textContent = 'はずれ。もう一度挑戦してください。';
+                resultDiv.style.color = 'black';
+                bigWinMessage.style.display = 'none';
+                smallWinMessage.style.display = 'none';
+            }
+
+            if (spinCount > 50) {
+                probabilityButton.style.display = 'block';
+            }
+        });
+
+        probabilityButton.addEventListener('click', function() {
+            bigWinProbability = 1 / 20;
+            probabilityButton.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
