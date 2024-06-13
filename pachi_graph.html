@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パチンコシミュレーター</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>パチンコシミュレーター</h1>
+    <label for="limittime">所要時間(h): </label>
+    <input type="number" id="limittime" step="0.1">
+    <br>
+    <label for="rotate_ave">平均回転数: </label>
+    <input type="number" id="rotate_ave">
+    <br>
+    <label for="kankinritu">何円貸し: </label>
+    <input type="number" id="kankinritu" step="0.01">
+    <br>
+    <button onclick="runSimulation()">シミュレーション開始</button>
+    <br>
+    <pre id="output"></pre>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <script src="simulation_graph.js"></script>
+</body>
+</html>
