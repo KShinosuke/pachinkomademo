@@ -128,13 +128,7 @@ function runSimulation() {
                         text: '金額 (円)'
                     },
                     ticks: {
-                        callback: function(value, index, values) {
-                            if (value < 0) {
-                                return `-¥${Math.abs(value).toLocaleString()}`;
-                            } else {
-                                return `¥${value.toLocaleString()}`;
-                            }
-                        }
+                        stepSize: 50000
                     }
                 
                 },
@@ -150,6 +144,18 @@ function runSimulation() {
             }
         }
     });
+
+    // HTMLの出力をコメントアウト
+    // output.textContent += "遊戯終了\n";
+    // output.textContent += "通常時最終回転は"　+ fin_route + "回転でした\n";
+    // output.textContent += "通常時の総回転数は" + total_route + "回転でした\n";
+    // output.textContent += "初当たり回数は" + hit + "回でした\n";
+    // output.textContent += "確変中当たり回数は" + kakuhen_total_hit + "回でした\n";
+    // output.textContent += "投資: " + Math.floor(invest) + "円\n";
+    // output.textContent += "収入: " + Math.floor(income) + "円\n";
+    // let total = income - invest;
+    // output.textContent += "今回の収支は" + Math.floor(total) + "円です\n";
+}
 
     // HTMLの出力をコメントアウト
     // output.textContent += "遊戯終了\n";
