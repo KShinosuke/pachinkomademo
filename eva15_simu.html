@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>エヴァ15 パチンコシミュレーター 319</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #result {
+            margin-top: 20px;
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+</head>
+<body>
+    <h1>パチンコシミュレーター</h1>
+    <div class="input-group">
+        <label for="ballPrice">貸玉料金（円）:</label>
+        <input type="number" id="ballPrice" value="4">
+    </div>
+    <div class="input-group">
+        <label for="averageSpins">平均回転数:</label>
+        <input type="number" id="averageSpins" value="200">
+    </div>
+    <div class="input-group">
+        <label for="playTime">遊戯時間（時間）:</label>
+        <input type="number" id="playTime" value="2">
+    </div>
+    <div class="input-group">
+        <label for="simulationCount">シミュレーション回数:</label>
+        <input type="number" id="simulationCount" value="10">
+    </div>
+    <button id="playButton">スタート</button>
+    <div id="result"></div>
+    <canvas id="resultChart" width="400" height="200"></canvas>
+
+    <script src="eva_simu.js"></script>
+</body>
+</html>
