@@ -21,7 +21,7 @@
 
 </head>
 <body>
-    <h1>パチンコシミュレーター</h1>
+    <h1>エヴァ16 パチンコシミュレーター</h1>
     <div class="input-group">
         <label for="ballPrice">貸玉料金（円）:</label>
         <input type="number" id="ballPrice" value="4">
@@ -41,7 +41,12 @@
     <button id="playButton">スタート</button>
     <div id="result"></div>
     <canvas id="resultChart" width="400" height="200"></canvas>
+    <div id="medianResult"></div>  
+    <div id="averageResult"></div>  <!-- 平均値表示用の要素 -->
+    <div id="hourlyRateResult"></div> 
+
 
     <script src="eva16_simu.js"></script>
 </body>
 </html>
+
