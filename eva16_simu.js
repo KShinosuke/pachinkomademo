@@ -88,7 +88,7 @@ function playPachinko() {
         balances.push(balance);
     }
 
-    displayResults(balances);
+    displayResults(balances, playTime);
 }
 
 function getNormalHitType() {
@@ -102,7 +102,7 @@ function getNormalHitType() {
     }
 }
 
-function displayResults(balances) {
+function displayResults(balances, playTime) {
     const ctx = document.getElementById('resultChart').getContext('2d');
     
     // 既存のチャートが存在する場合は破棄する
@@ -167,4 +167,31 @@ function displayResults(balances) {
             }
         }
     });
+
+    // 中央値の計算
+    const median = calculateMedian(balances);
+    // 平均値の計算
+    const average = calculateAverage(balances);
+    // 時給の計算
+    const hourlyRate = Math.floor(average / (playTime / 3600));
+    
+    document.getElementById('medianResult').innerText = `中央値: ${Math.floor(median).toLocaleString()}円`;
+    document.getElementById('averageResult').innerText = `平均値: ${Math.floor(average).toLocaleString()}円`;
+    document.getElementById('hourlyRateResult').innerText = `時給: ${hourlyRate.toLocaleString()}円`;
+}
+
+function calculateMedian(arr) {
+    const sortedArr = arr.slice().sort((a, b) => a - b);
+    const middle = Math.floor(sortedArr.length / 2);
+
+    if (sortedArr.length % 2 === 0) {
+        return (sortedArr[middle - 1] + sortedArr[middle]) / 2;
+    } else {
+        return sortedArr[middle];
+    }
+}
+
+function calculateAverage(arr) {
+    const sum = arr.reduce((a, b) => a + b, 0);
+    return sum / arr.length;
 }
